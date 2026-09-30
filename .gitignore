@@ -1,0 +1,13 @@
+# Archivos de sistema y entorno
+.DS_Store
+Thumbs.db
+*.log
+
+# Entornos IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Archivos de configuración local o bases de datos SQLite si existieran
+*.env
