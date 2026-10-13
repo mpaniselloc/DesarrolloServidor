@@ -1,46 +1,23 @@
-<?php
+<!DOCTYPE html>
+<html lang="es">
 
-/**
- * index.php - Punto de entrada único de la aplicación (Front Controller).
- * Todas las peticiones pasan por aquí. Según el parámetro ?accion=...
- * se llama al método del controlador correspondiente.
- */
-require_once __DIR__ . '/models/Sesion.php';
-require_once __DIR__ . '/controller/AuthController.php';
-require_once __DIR__ . '/controller/PanelController.php';
-require_once __DIR__ . '/controller/RegistroController.php';
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
 
-$accion = $_GET['accion'] ?? '';
 
-switch ($accion) {
-  // --- Acceso ---
-  case 'login':
-    (new AuthController())->login();
-    break;
+<!-- Pagina inicial donde incluimos la cabecera y el formulario de login -->
 
-  case 'logout':
-    (new AuthController())->logout();
-    break;
 
-  // --- Registro de nuevo usuario ---
-  case 'registro':
-    (new RegistroController())->formulario();
-    break;
+<body>
+  <?php
+  include "components/layout/header.php";
+  include "components/forms/loginform.php";
+  ?>
 
-  case 'confirmar':
-    (new RegistroController())->confirmar();
-    break;
+</body>
 
-  case 'crear':
-    (new RegistroController())->crear();
-    break;
-
-  // --- Página por defecto: panel si hay sesión, login si no ---
-  default:
-    if (Sesion::estaActiva()) {
-      (new PanelController())->mostrar();
-    } else {
-      (new AuthController())->mostrarLogin();
-    }
-    break;
-}
+</html>
