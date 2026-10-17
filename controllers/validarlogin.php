@@ -1,7 +1,6 @@
 <?php
-// Iniciamos sesion e incluimos el archivo que contiene la funcion validarCredenciales<
 session_start();
-include "../models/validarDatos.php";
+require_once "../models/validarDatos.php";
 
 // 1. Verificamos que la petición sea por POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

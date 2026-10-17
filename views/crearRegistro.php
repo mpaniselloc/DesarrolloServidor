@@ -1,7 +1,6 @@
 <?php
-// Incluimos la función de validación y el Modelo Usuario
-include "../models/validarDatos.php";
-include "../models/usuario.php";
+require_once "../models/validarDatos.php";
+require_once "../models/usuario.php";
 
 // Llamaos a la funcion donde comprobamos los datos
 if (comprobarDatosRegistro()) {

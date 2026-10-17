@@ -10,9 +10,13 @@ function comprobarDatosRegistro()
 }
 
 
-// Comprueba si el usuario y contraseña coinciden con las credenciales válidas
+// Comprueba si el usuario y contraseña coinciden con las credenciales válidas, creamos un array asociativo con los 2 usuarios que tenemos
 function validarCredenciales($usuario, $password)
 {
-  // Por ahora comprobación fija 
-  return ($usuario === 'admin' && $password === 'abcdef');
+  $usuariosValidos = [
+    'admin' => 'abcdef',
+    'user'  => '123456'
+  ];
+
+  return isset($usuariosValidos[$usuario]) && $usuariosValidos[$usuario] === $password;
 }
