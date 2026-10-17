@@ -34,7 +34,7 @@ $_SESSION['tiempo'] = time();
 
 <body>
   <?php
-  include "../components/layout/header.php";
+  include "header.php";
   ?>
   <h1> Bienvenido a LibroSphere</h1>
   <h2>Perfil usuario: <?php echo ($_SESSION['usuario']); ?></h2>

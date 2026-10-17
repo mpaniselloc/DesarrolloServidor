@@ -2,7 +2,7 @@
 <div class="completo">
   <div class="centrado">
     <h2>ACCESO</h2>
-    <form action="sesiones/validarlogin.php" method="post">
+    <form action="controllers/validarlogin.php" method="post">
       <div class="formulario-login">
         <label for="usuario">Usuario</label>
         <input type="text" id="usuario" name="usuario" required>
@@ -16,7 +16,7 @@
       <input type="submit" value="Enviar">
       <br><br>
       <div class="formulario-login">
-        <a href="NuevoRegistro.php">Nuevo usuario</a>
+        <a href="views/NuevoRegistro.php">Nuevo usuario</a>
       </div>
     </form>
   </div>

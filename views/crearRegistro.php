@@ -1,6 +1,6 @@
 <?php
 // Incluimos la función de validación y el Modelo Usuario
-include "../services/validarDatos.php";
+include "../models/validarDatos.php";
 include "../models/usuario.php";
 
 // Llamaos a la funcion donde comprobamos los datos
@@ -25,7 +25,7 @@ if (comprobarDatosRegistro()) {
   </head>
 
   <body>
-    <?php include "../components/layout/header.php"; ?>
+    <?php include "header.php"; ?>
 
     <div class="completo">
       <div class="centrado">

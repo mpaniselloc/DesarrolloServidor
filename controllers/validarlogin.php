@@ -1,7 +1,7 @@
 <?php
 // Iniciamos sesion e incluimos el archivo que contiene la funcion validarCredenciales<
 session_start();
-include "../services/validarDatos.php";
+include "../models/validarDatos.php";
 
 // 1. Verificamos que la petición sea por POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['usuario'] = $usuario;
     $_SESSION['tiempo'] = time();
 
-    header('Location: index.php');
+    header('Location: ../views/index.php');
     exit();
   } else {
     // Credenciales INCORRECTAS: volvemos al login principal

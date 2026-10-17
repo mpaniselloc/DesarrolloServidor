@@ -14,8 +14,8 @@
 
 <body>
   <?php
-  include "components/layout/header.php";
-  include "components/forms/loginform.php";
+  include "views/header.php";
+  include "views/loginform.php";
   ?>
 
 </body>
