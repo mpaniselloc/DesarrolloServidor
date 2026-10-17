@@ -63,7 +63,7 @@ $_SESSION['tiempo'] = time();
     </div>
 
 
-    <!-- Recorremoc el catalago y lo mostramos -->
+    <!-- Recorremos el catalago y lo mostramos -->
     <?php foreach ($catalogo->libro as $libro): ?>
       <div class="libro">
         <img src="../assets/img/<?php echo $libro->portada; ?>" width="120" height="180" alt="Portada">
@@ -75,6 +75,8 @@ $_SESSION['tiempo'] = time();
           <br>
           <p><b>Categoría:</b> <?php echo $libro->categoria; ?></p>
 
+
+          <!-- Creamos la condicion de que si en el xml la promocion es si se muestre el descuento -->
           <?php if ($libro->promocion == "si"): ?>
             <br>
             <p class="promocion">Promoción -30%</p>
