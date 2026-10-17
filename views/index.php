@@ -29,14 +29,14 @@ $_SESSION['tiempo'] = time();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil de Usuario - LibroSphere</title>
-  <link rel="stylesheet" href="../assets/styles.css">
+  <link rel="stylesheet" href="../assets/styles.css?v=<?php echo time(); ?>">
 </head>
 
 <body>
   <?php
   include "header.php";
   ?>
-
+  <!-- Si el ususario es admin, le mostraremos esta parte de la vista -->
   <?php if ($_SESSION['usuario'] === 'admin'): ?>
     <main style="padding: 20px 40px;">
       <h1 style="font-size: 36px; font-weight: bold; margin-bottom: 25px;">ERP LibroSphere</h1>
@@ -46,13 +46,44 @@ $_SESSION['tiempo'] = time();
       <br><br>
       <a href="../index.php">Cerrar sesión</a>
     </main>
+
+
+    <!-- Si el usuario no es admin, en este caso user, le mostraremos esto -->
+
   <?php else: ?>
-    <main style="padding: 20px 40px;">
-      <h1>Bienvenido a LibroSphere</h1>
-      <h2>Perfil usuario: <?php echo htmlspecialchars($_SESSION['usuario']); ?></h2>
-      <br>
+    <?php
+    // LLamamos a la funcion listaLibros que esta en el controlador librosController
+    require_once "../controllers/librosController.php";
+    $controller = new librosController();
+    $catalogo = $controller->listaLibros();
+    ?>
+
+    <div style="text-align: right; width: 600px; margin: 10px auto;">
       <a href="../index.php">Cerrar sesión</a>
-    </main>
+    </div>
+
+
+    <!-- Recorremoc el catalago y lo mostramos -->
+    <?php foreach ($catalogo->libro as $libro): ?>
+      <div class="libro">
+        <img src="../assets/img/<?php echo $libro->portada; ?>" width="120" height="180" alt="Portada">
+
+        <div class="libro-datos">
+          <p><b>Titulo:</b> <?php echo $libro->titulo; ?></p>
+          <br>
+          <p><b>Autor:</b> <?php echo $libro->autor; ?></p>
+          <br>
+          <p><b>Categoría:</b> <?php echo $libro->categoria; ?></p>
+
+          <?php if ($libro->promocion == "si"): ?>
+            <br>
+            <p class="promocion">Promoción -30%</p>
+          <?php endif; ?>
+        </div>
+
+        <button class="comprar-btn">COMPRAR</button>
+      </div>
+    <?php endforeach; ?>
   <?php endif; ?>
 </body>
 

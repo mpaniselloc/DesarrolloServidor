@@ -4,7 +4,7 @@
   </div>
   <?php if (isset($_SESSION['usuario'])): ?>
     <div style="color: #333; font-size: 15px;">
-      user: <?php echo ucfirst($_SESSION['usuario']); ?> | hora inicio:<?php echo date("H:i", $_SESSION['tiempo']); ?>
+      user: <?php echo htmlspecialchars($_SESSION['usuario']); ?> | hora inicio:<?php echo date("H:i", $_SESSION['tiempo']); ?>
     </div>
   <?php endif; ?>
 </header>
