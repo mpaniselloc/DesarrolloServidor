@@ -1,6 +1,6 @@
 <?php
-require_once "services/validarDatos.php";
-require_once "models/usuario.php";
+require_once __DIR__ . "/../models/validarDatos.php";
+require_once __DIR__ . "/../models/usuario.php";
 
 // Si se reciben datos por POST (ej. al pulsar "Volver"), creamos el objeto Usuario con esos datos
 if (comprobarDatosRegistro()) {
@@ -21,7 +21,7 @@ if (comprobarDatosRegistro()) {
 <div class="completo">
   <div class="centrado">
     <h2>ALTA USUARIO</h2>
-    <form action="sesiones/confirmarRegistro.php" method="post">
+    <form action="confirmarRegistro.php" method="post">
       <div class="formulario-conjunto">
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" name="nombre" value="<?php echo $usuario->getNombre(); ?>" required>
@@ -45,7 +45,7 @@ if (comprobarDatosRegistro()) {
       </div>
       <input type="submit" value="Aceptar">
       <br>
-      <input type="submit" value="Volver" formaction="index.php" formnovalidate>
+      <input type="submit" value="Volver" formaction="../index.php" formnovalidate>
     </form>
   </div>
 </div>

@@ -1,5 +1,5 @@
 <?php
-require_once "../services/validarDatos.php";
+require_once "../models/validarDatos.php";
 require_once "../models/usuario.php";
 
 if (comprobarDatosRegistro()) {
@@ -22,7 +22,7 @@ if (comprobarDatosRegistro()) {
   </head>
 
   <body>
-    <?php include "../components/layout/header.php"; ?>
+    <?php include "header.php"; ?>
 
     <div class="completo">
       <div class="centrado">
@@ -51,7 +51,7 @@ if (comprobarDatosRegistro()) {
           </div>
           <input type="submit" value="Confirmar" formaction="crearRegistro.php">
           <br>
-          <input type="submit" value="Cancelar" formaction="../NuevoRegistro.php">
+          <input type="submit" value="Cancelar" formaction="NuevoRegistro.php">
         </form>
       </div>
     </div>

@@ -156,3 +156,44 @@ button:hover {
     margin-top: 20px;
     font-size: 14px;
 }
+
+/* Css creado para listar los libros */
+.libro {
+    border: 1px solid black;
+    border-radius: 15px;
+    width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    position: relative;
+}
+
+.libro img {
+    width: 120px;
+    height: 180px;
+    object-fit: cover;
+}
+
+.libro-datos p {
+    font-size: 18px;
+}
+
+.promocion {
+    color: #e59800;
+    font-weight: bold;
+}
+
+.comprar-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: auto;
+    background-color: black;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
