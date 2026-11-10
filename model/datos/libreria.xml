@@ -178,7 +178,7 @@
         <edicion>4</edicion>
         <promocion>no</promocion>
         <fecha>2005-03-14</fecha>
-        <portada>portada_18.png</portada>
+        <portada>portada_18 .png</portada>
     </libro>
     <libro>
         <titulo>Orgullo y prejuicio</titulo>
@@ -288,7 +288,7 @@
         <edicion>6</edicion>
         <promocion>no</promocion>
         <fecha>2007-03-12</fecha>
-        <portada>portada_29.png</portada>
+        <portada>portada_29 .png</portada>
     </libro>
     <libro>
         <titulo>La catedral del mar</titulo>
@@ -318,7 +318,7 @@
         <edicion>7</edicion>
         <promocion>si</promocion>
         <fecha>2014-09-04</fecha>
-        <portada>portada_32.png</portada>
+        <portada>portada_32a.png</portada>
     </libro>
     <libro>
         <titulo>El alquimista</titulo>
@@ -338,7 +338,7 @@
         <edicion>4</edicion>
         <promocion>si</promocion>
         <fecha>2005-08-24</fecha>
-        <portada>portada_34.png</portada>
+        <portada>portada_34 .png</portada>
     </libro>
     <libro>
         <titulo>El invierno del mundo</titulo>
@@ -398,7 +398,7 @@
         <edicion>11</edicion>
         <promocion>no</promocion>
         <fecha>1862-04-03</fecha>
-        <portada>portada_40.png</portada>
+        <portada>portada_40 .png</portada>
     </libro>
     <libro>
         <titulo>El silencio de los corderos</titulo>
