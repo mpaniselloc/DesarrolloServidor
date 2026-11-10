@@ -1,0 +1,258 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+.header {
+ 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+.logo h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.menu ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: #ff6347; /* Color al pasar el ratón por encima */
+}
+.completo {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+.listado{
+    width: 90%;
+    padding: 5%;
+}
+
+.centrado {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.formulario-conjunto {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+input[type="text"],input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ff6347;
+}
+.pie {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 50px;
+}
+
+.pie h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.pie p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.pie a {
+    color: #ff6347;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.pie a:hover {
+    color: #ffffff; /* Cambia a blanco al pasar el ratón */
+}
+
+.legal {
+    margin-top: 20px;
+    font-size: 14px;
+}
+/* Estilos para el contenedor principal del formulario */
+.contenedor-principal {
+    display:inline-block;
+    width: 25%;
+    justify-content: center;
+    align-items: center;
+   
+}
+
+/* Estilos para la tarjeta de libro */
+.tarjeta-libro {
+    display: flex;
+    width: 95%;
+    min-height: 150px;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 2%;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para la imagen del libro */
+.imagen-libro {
+    width: 25%;
+
+    margin-right: 15px;
+    
+}
+.imagen-libro img {
+    width: 100%;
+    border-radius: 4px;
+}
+
+/* Estilo para el contenedor de información del libro */
+.informacion-libro {
+   width: 65%
+}
+
+/* Estilos de texto para título, autor y categoría */
+.titulo, .autor, .categoria, .oferta {
+    margin: 5px 0;
+    font-size: 14px;
+}
+.oferta {
+color: burlywood;
+font-weight: 700;
+}
+
+.titulo {
+    font-weight: bold;
+}
+
+/* Estilo para el botón de comprar */
+.boton-comprar {
+    width: 85%;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.boton-comprar:hover {
+    background-color: #333;
+}
+
+/* Contenedor de módulos de navegación */
+.contenedor-modulos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+/* Estilo de cada módulo individual */
+.modulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.modulo p {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Estilos para los iconos */
+.icono {
+    width: 50px;
+    height: 50px;
+    background-color: #777; /* Color placeholder */
+    mask-size: cover;
+    mask-repeat: no-repeat;
+    background-color: #fff;
+}
+
+/* Especificar iconos individuales */
+.icono-clientes {
+    mask-image: url('includes/img/user.svg'); /* Reemplazar con la ruta del icono */
+}
+
+.icono-libros {
+    mask-image: url('icono-libros.svg'); /* Reemplazar con la ruta del icono */
+}
+
+.icono-pedidos {
+    mask-image: url('icono-pedidos.svg'); /* Reemplazar con la ruta del icono */
+}
