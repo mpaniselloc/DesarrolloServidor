@@ -25,7 +25,7 @@ class usuarioModel
     return $filas ? $filas[0] : null;
   }
 
-  //Inserta un usuario nuevo guardando la contraseña cifrada
+  //Inserta un usuario nuevo guardando la contraseña cifrada en SHA-256
   public function insertar($nombre, $edad, $nick, $contrasena)
   {
     //Verifica que el nick no exista
@@ -38,7 +38,7 @@ class usuarioModel
       $nombre,
       (int) $edad,
       $nick,
-      password_hash($contrasena, PASSWORD_DEFAULT)
+      hash('sha256', $contrasena)
     );
   }
 
@@ -63,7 +63,8 @@ class usuarioModel
   public function validarLogin($nick, $contrasena)
   {
     $usuario = $this->buscarPorNick($nick);
-    if ($usuario && password_verify($contrasena, $usuario['contrasena'])) {
+    //Cifra la contraseña escrita con SHA-256 y la compara con la guardada
+    if ($usuario && hash_equals($usuario['contrasena'], hash('sha256', $contrasena))) {
       return $usuario;
     }
     return null;

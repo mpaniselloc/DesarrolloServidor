@@ -256,3 +256,43 @@ font-weight: 700;
 .icono-pedidos {
     mask-image: url('icono-pedidos.svg'); /* Reemplazar con la ruta del icono */
 }
+
+/* Enlace de los módulos del panel de administración */
+a.modulo {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Tabla de gestión de clientes */
+.tabla-contenedor {
+    overflow-x: auto;
+}
+
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.tabla-usuarios th,
+.tabla-usuarios td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.tabla-usuarios th {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Botones dentro de la tabla: sin ancho completo */
+.tabla-usuarios form {
+    margin: 0;
+}
+
+.tabla-usuarios button {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 14px;
+}

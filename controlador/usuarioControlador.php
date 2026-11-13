@@ -34,6 +34,30 @@ class usuarioControlador
     include __DIR__ . '/../vista/altaVista.php';
   }
 
+  //Obtiene los usuarios registrados y muestra la tabla de gestión de clientes
+  public function listadoUsuarios()
+  {
+    $usuarios = $this->usuarios->obtenerTodos();
+    include __DIR__ . '/../vista/GestionClientesVista.php';
+  }
+
+  //Elimina el usuario que llega por POST y vuelve a la tabla
+  public function eliminarUsuario()
+  {
+    if (isset($_POST['id'])) {
+      $usuario = $this->usuarios->buscarPorId($_POST['id']);
+
+      //El admin no se puede borrar: si no, nadie podría volver a entrar al panel
+      if ($usuario && $usuario['nick_usuario'] != "admin") {
+        $this->usuarios->eliminar($usuario['id']);
+      }
+    }
+
+    //Redirige para que al pulsar F5 no se repita el borrado
+    header("Location: gestionClientes.php");
+    exit();
+  }
+
   //Comprueba el nick y la contraseña contra la base de datos e inicia la sesión
   public function login()
   {
@@ -41,8 +65,6 @@ class usuarioControlador
       $usuario = $this->usuarios->validarLogin($_POST['usuario'], $_POST['passw']);
 
       if ($usuario) {
-        //Cambia el id de sesión al iniciar sesión, por seguridad
-        session_regenerate_id(true);
         //index.php usa este valor para elegir la vista de admin o la de user
         $_SESSION['usuario'] = $usuario['nick_usuario'];
         $_SESSION['tiempo'] = time();

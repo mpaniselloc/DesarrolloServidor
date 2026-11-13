@@ -1,8 +1,8 @@
 <div class="contenedor-modulos">
-    <div class="modulo">
+    <a class="modulo" href="gestionClientes.php">
         <div class="icono icono-clientes"></div>
         <p>Gestión Clientes</p>
-    </div>
+    </a>
     <div class="modulo">
         <div class="icono icono-libros"></div>
         <p>Gestión Libros</p>
