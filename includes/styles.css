@@ -296,3 +296,15 @@ a.modulo {
     padding: 6px 12px;
     font-size: 14px;
 }
+/* Enlace Modificar y botón Eliminar uno al lado del otro */
+.acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Mensaje de error de los formularios */
+.mensaje-error {
+    color: #c0392b;
+    font-weight: bold;
+}

@@ -41,6 +41,53 @@ class usuarioControlador
     include __DIR__ . '/../vista/GestionClientesVista.php';
   }
 
+  //Muestra el formulario de modificar relleno con los datos del usuario
+  //Si viene de un intento fallido, muestra el error y lo que se había escrito
+  public function formularioEditar($error = null)
+  {
+    $id = $_POST['id'] ?? $_GET['id'] ?? 0;
+    $usuario = $this->usuarios->buscarPorId($id);
+
+    //Si el usuario no existe, se vuelve a mostrar la tabla
+    if (!$usuario) {
+      $this->listadoUsuarios();
+      return;
+    }
+
+    //La primera vez se usan los datos de la base de datos; tras un error, lo que se escribió
+    $nombre = $_POST['nombre'] ?? $usuario['nombre'];
+    $edad = $_POST['edad'] ?? $usuario['edad'];
+    include __DIR__ . '/../vista/editarUsuarioVista.php';
+  }
+
+  //Guarda los cambios de nombre y edad
+  //Si todo va bien redirige a la tabla; si no, devuelve el mensaje de error
+  public function actualizarUsuario()
+  {
+    $id = $_POST['id'] ?? 0;
+    $nombre = trim($_POST['nombre'] ?? "");
+    $edad = trim($_POST['edad'] ?? "");
+
+    //Si el usuario no existe, no hay nada que modificar
+    if (!$this->usuarios->buscarPorId($id)) {
+      header("Location: gestionClientes.php");
+      exit();
+    }
+
+    if ($nombre == "" || $edad == "") {
+      return "Rellena todos los campos.";
+    }
+    if (!ctype_digit($edad)) {
+      return "La edad tiene que ser un número.";
+    }
+
+    $this->usuarios->actualizar($id, $nombre, $edad);
+
+    //Redirige para que al pulsar F5 no se vuelva a enviar el formulario
+    header("Location: gestionClientes.php");
+    exit();
+  }
+
   //Elimina el usuario que llega por POST y vuelve a la tabla
   public function eliminarUsuario()
   {

@@ -9,11 +9,19 @@ if (!isset($_SESSION['usuario']) || $_SESSION['usuario'] != "admin") {
 require_once "controlador/usuarioControlador.php";
 $controlador = new usuarioControlador();
 
+//Qué pantalla se muestra: la tabla (por defecto) o el formulario de modificar
+$accion = $_GET['accion'] ?? "";
+$error = null;
+
 //Las acciones que cambian datos llegan por POST y se procesan antes de enviar HTML,
 //porque terminan con header("Location: ...") y eso solo funciona si aún no hay salida
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['accion'])) {
   if ($_POST['accion'] == "eliminar") {
     $controlador->eliminarUsuario();
+  } elseif ($_POST['accion'] == "actualizar") {
+    //Si se guarda bien, redirige y no sigue; si llega aquí es que hay un error
+    $error = $controlador->actualizarUsuario();
+    $accion = "editar";
   }
 }
 ?>
@@ -30,7 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['accion'])) {
 <body>
   <?php include "includes/cabecera.html"; ?>
   <section class="listado">
-    <?php $controlador->listadoUsuarios(); ?>
+    <?php
+    if ($accion == "editar") {
+      $controlador->formularioEditar($error);
+    } else {
+      $controlador->listadoUsuarios();
+    }
+    ?>
   </section>
   <?php include "includes/pie.html"; ?>
 </body>
