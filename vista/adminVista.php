@@ -7,8 +7,8 @@
         <div class="icono icono-libros"></div>
         <p>Gestión Libros</p>
     </div>
-    <div class="modulo">
+    <a class="modulo" href="gestionPedidos.php">
         <div class="icono icono-pedidos"></div>
         <p>Gestión Pedidos</p>
-    </div>
+    </a>
 </div>

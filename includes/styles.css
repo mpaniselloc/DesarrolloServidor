@@ -308,3 +308,18 @@ a.modulo {
     color: #c0392b;
     font-weight: bold;
 }
+
+/* El enlace Modificar con el mismo aspecto que el botón Eliminar */
+.acciones a {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    color: white;
+    background-color: #333;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.acciones a:hover {
+    background-color: #ff6347;
+}
