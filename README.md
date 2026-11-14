@@ -1,88 +1,155 @@
 # LibroSphere - Sistema de Gestión de Biblioteca
 
-Aplicación web desarrollada en **PHP** siguiendo el patrón de arquitectura **MVC (Modelo-Vista-Controlador)** y **Programación Orientada a Objetos (POO)**. Permite la autenticación de usuarios mediante roles, la gestión de sesiones con control de inactividad, el registro de nuevos usuarios con validación de datos y la visualización de un catálogo de libros alimentado desde un archivo XML.
+Aplicación web desarrollada en **PHP** siguiendo el patrón **MVC (Modelo-Vista-Controlador)** y **Programación Orientada a Objetos (POO)**. Permite el inicio de sesión con roles, el registro de nuevos usuarios, la consulta de un catálogo de libros cargado desde XML, la compra de libros y un panel de administración (ERP) para gestionar clientes y pedidos almacenados en una base de datos **MySQL**.
 
 ---
 
 ## 🚀 Características Principales
 
-- **Control de Acceso y Roles de Usuario:**
-  - **Administrador (`admin`):** Acceso al panel de gestión / ERP.
-  - **Usuario Estándar (`user`):** Acceso al catálogo interactivo de libros.
-- **Seguridad y Control de Sesión:**
-  - Manejo de sesiones nativas de PHP (`$_SESSION`).
-  - Cierre de sesión automático por inactividad tras 30 minutos.
-  - Protección de rutas y vistas contra acceso directo sin autenticación previa.
-- **Catálogo de Libros mediante XML:**
-  - Carga y parseo dinámico de datos bibliográficos desde `libreria.xml` usando **SimpleXML**.
-- **Registro de Usuarios con POO:**
-  - Uso de la clase `Usuario` con encapsulación (atributos privados, _getters_ y _setters_).
-  - Clasificación automática por categorías según la edad introducida.
-  - Vista de confirmación previa de los datos introducidos.
+- **Autenticación contra base de datos:**
+  - Usuarios almacenados en la tabla `usuarios` con contraseñas cifradas en **SHA-256**.
+  - Comparación segura de contraseñas con `hash_equals()`.
+- **Roles de usuario:**
+  - **Administrador (`admin`):** accede al panel ERP con los módulos de gestión.
+  - **Usuario estándar:** accede al catálogo de libros y puede realizar compras.
+- **Control de sesión:**
+  - Sesiones nativas de PHP (`$_SESSION`).
+  - Cierre automático de la sesión tras **30 minutos**.
+  - Las páginas de gestión y compra redirigen al inicio si no hay sesión o el rol no es el adecuado.
+- **Catálogo de libros (XML):**
+  - Lectura de `model/datos/libreria.xml` con **SimpleXML** (título, autor, categoría, ISBN, edición, promoción, fecha y portada).
+- **Compra de libros:**
+  - Botón *Comprar* en cada libro del catálogo que genera un pedido en la tabla `pedidos`.
+  - El pedido se registra siempre a nombre del usuario de la sesión.
+- **Registro de usuarios:**
+  - Formulario de alta con pantalla de confirmación y opción de corregir datos.
+  - Clasificación por categoría de edad (*Joven* / *Senior*).
+  - Control de nick repetido.
+- **Panel de administración (ERP):**
+  - **Gestión de Clientes:** listado, modificación (nombre y edad) y eliminación de usuarios. El usuario `admin` no se puede eliminar.
+  - **Gestión de Pedidos:** listado, modificación y eliminación de pedidos.
+  - **Gestión de Libros:** módulo pendiente de implementar.
+- **Acceso a datos seguro:**
+  - Clase `BaseDatos` con conexión única (*singleton*) mediante **mysqli** y **consultas preparadas** para evitar inyección SQL.
 
 ---
 
-## 📁 Estructura del Proyecto (MVC)
+## 📁 Estructura del Proyecto
 
 ```text
-biblioteca/
-├── assets/                  # Hojas de estilo CSS e imágenes del proyecto
-│   ├── styles.css           # Estilos visuales de la aplicación
-│   ├── ERP.png              # Imagen del panel de administración
-│   └── portada.jpg
-├── controllers/             # Controladores (Lógica de la aplicación)
-│   ├── librosController.php # Conecta el modelo de libros con la vista del catálogo
-│   └── validarlogin.php     # Valida credenciales, inicia sesión y redirige según rol
-├── models/                  # Modelos y lógica de datos
-│   ├── libreria.xml         # Fuente de datos con el catálogo de libros
-│   ├── libros.php           # Modelo para la lectura y gestión del XML
-│   ├── usuario.php          # Clase Usuario (POO con tipado y métodos)
-│   └── validarDatos.php     # Funciones de validación de datos y credenciales
-├── views/                   # Vistas (Interfaz de usuario)
-│   ├── confirmarRegistro.php # Resumen de confirmación tras registrar un usuario
-│   ├── header.php           # Cabecera compartida (logo, navegación)
-│   ├── index.php            # Panel principal tras login (catálogo o ERP según rol)
-│   ├── loginform.php        # Formulario de acceso
-│   └── nuevoUsuario.php     # Formulario para el alta de nuevos usuarios
-├── index.php                # Punto de entrada público de la aplicación
-└── README.md                # Documentación del proyecto
+DesarrolloServidor/
+├── index.php                    # Punto de entrada: login o panel según el rol
+├── alta.php                     # Guarda el nuevo usuario en la BD
+├── Altaformulario.php           # Confirmación de los datos de registro
+├── comprar.php                  # Formulario y proceso de compra de un libro
+├── gestionClientes.php          # Gestión de clientes (solo admin)
+├── gestionPedidos.php           # Gestión de pedidos (solo admin)
+├── config.ini                   # Datos de conexión a la base de datos
+├── controlador/
+│   ├── libreriaControlador.php  # Catálogo de libros
+│   ├── pedidoControlador.php    # Compras y gestión de pedidos
+│   └── usuarioControlador.php   # Login, alta y gestión de usuarios
+├── model/
+│   ├── bdmodel.php              # Clase BaseDatos (conexión y consultas preparadas)
+│   ├── libreriaModel.php        # Lectura del XML de libros
+│   ├── pedidoModel.php          # Consultas de la tabla pedidos
+│   ├── usuarioModel.php         # Consultas de la tabla usuarios
+│   └── datos/libreria.xml       # Catálogo de libros
+├── vista/
+│   ├── adminVista.php           # Panel ERP del administrador
+│   ├── userVista.php            # Catálogo de libros
+│   ├── altaVista.php            # Resultado del registro
+│   ├── comprarVista.php         # Formulario de compra
+│   ├── pedidoRealizadoVista.php # Confirmación de compra
+│   ├── GestionClientesVista.php # Tabla de clientes
+│   ├── editarUsuarioVista.php   # Formulario de edición de cliente
+│   ├── GestionPedidosVista.php  # Tabla de pedidos
+│   └── editarPedidoVista.php    # Formulario de edición de pedido
+├── sesiones/controlSesiones/
+│   ├── validarSesion.php        # Valida el login e inicia la sesión
+│   └── cerrarSesion.php         # Cierra la sesión
+└── includes/
+    ├── cabecera.html / pie.html # Cabecera y pie comunes
+    ├── login.php                # Formulario de acceso
+    ├── form.php                 # Formulario de registro
+    ├── funciones.php            # Funciones auxiliares
+    ├── styles.css               # Estilos
+    └── img/                     # Portadas de los libros e iconos
+```
+
+---
+
+## 🗄️ Base de Datos
+
+La conexión se configura en `config.ini`:
+
+```ini
+servidor = localhost
+usuario = root
+pasw =
+baseDatos = biblioteca
+```
+
+Script para crear la base de datos con las tablas que usa la aplicación y los usuarios de prueba:
+
+```sql
+CREATE DATABASE IF NOT EXISTS biblioteca CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE biblioteca;
+
+CREATE TABLE usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  edad INT NOT NULL,
+  nick_usuario VARCHAR(50) NOT NULL UNIQUE,
+  contrasena CHAR(64) NOT NULL          -- SHA-256 en hexadecimal
+);
+
+CREATE TABLE pedidos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  isbn VARCHAR(20) NOT NULL,
+  fecha DATE NOT NULL,
+  usuario VARCHAR(50) NOT NULL
+);
+
+INSERT INTO usuarios (nombre, edad, nick_usuario, contrasena) VALUES
+  ('Administrador', 30, 'admin', SHA2('abcdef', 256)),
+  ('Usuario',       25, 'user',  SHA2('123456', 256));
 ```
 
 ---
 
 ## 🔑 Credenciales de Prueba
 
-Para probar el inicio de sesión existen los siguientes usuarios configurados en el sistema:
+| Rol               | Usuario | Contraseña | Vista asignada        |
+| :---------------- | :------ | :--------- | :-------------------- |
+| **Administrador** | `admin` | `abcdef`   | Panel ERP LibroSphere |
+| **Usuario**       | `user`  | `123456`   | Catálogo de libros    |
 
-| Rol                  | Usuario | Contraseña | Vista asignada           |
-| :------------------- | :------ | :--------- | :----------------------- |
-| **Administrador**    | `admin` | `abcdef`   | Panel ERP LibroSphere    |
-| **Lector / Usuario** | `user`  | `123456`   | Catálogo de Libros (XML) |
+También se pueden crear usuarios nuevos desde el enlace **Nuevo Registro** de la pantalla de acceso.
 
 ---
 
 ## 🛠️ Requisitos Técnicos
 
-- **Servidor Web:** Apache (incluido en XAMPP, WAMP o LAMP).
-- **PHP:** Versión 8.0 o superior (con soporte para la extensión `SimpleXML` y sesiones activas).
-- **Navegador Web:** Chrome, Firefox, Edge o Safari.
+- **Servidor web:** Apache (XAMPP, WAMP o LAMP).
+- **PHP:** 8.0 o superior con las extensiones `mysqli` y `SimpleXML`.
+- **Base de datos:** MySQL o MariaDB.
+- **Navegador:** Chrome, Firefox, Edge o Safari.
 
 ---
 
 ## ⚙️ Instalación y Puesta en Marcha
 
-1. **Ubicar el proyecto en el servidor:**
-   Copia o clona la carpeta `biblioteca` dentro del directorio raíz de documentos de tu servidor local:
-   - **En XAMPP (Windows):** `C:\xampp\htdocs\biblioteca`
-   - **En Linux:** `/var/www/html/biblioteca` o `/opt/lampp/htdocs/biblioteca`
-
-2. **Iniciar el servidor Apache:**
-   - Abre el panel de control de **XAMPP** y haz clic en **Start** en el servicio de **Apache**.
-
-3. **Abrir en el navegador:**
-   Accede a la siguiente dirección URL:
+1. **Copiar el proyecto** en el directorio del servidor:
+   - **XAMPP (Windows):** `C:\xampp\htdocs\DesarrolloServidor`
+   - **Linux:** `/var/www/html/DesarrolloServidor` o `/opt/lampp/htdocs/DesarrolloServidor`
+2. **Iniciar Apache y MySQL** desde el panel de control de XAMPP.
+3. **Crear la base de datos** ejecutando el script SQL anterior en phpMyAdmin (`http://localhost/phpmyadmin`).
+4. **Revisar `config.ini`** si el usuario o la contraseña de MySQL son distintos.
+5. **Abrir en el navegador:**
    ```text
-   http://localhost/biblioteca/
+   http://localhost/DesarrolloServidor/
    ```
 
 ---
@@ -91,3 +158,4 @@ Para probar el inicio de sesión existen los siguientes usuarios configurados en
 
 - **Proyecto:** Desarrollo de Aplicación Web - LibroSphere
 - **Módulo:** Desarrollo Web en Entorno Servidor (DWES)
+- **Autor:** Marc Panisello Chiva
