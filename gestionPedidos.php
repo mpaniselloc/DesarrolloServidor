@@ -13,15 +13,16 @@ $controlador = new pedidoControlador();
 $accion = $_GET['accion'] ?? "";
 $error = null;
 
-//Las acciones que cambian datos llegan por POST y se procesan antes de enviar HTML,
-//porque terminan con header("Location: ...") y eso solo funciona si aún no hay salida
+//Las acciones que cambian datos llegan por POST y se procesan antes de montar la página
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['accion'])) {
   if ($_POST['accion'] == "eliminar") {
     $controlador->eliminarPedido();
   } elseif ($_POST['accion'] == "actualizar") {
-    //Si se guarda bien, redirige y no sigue; si llega aquí es que hay un error
+    //Si se guarda bien se muestra la tabla; si hay error, se vuelve al formulario
     $error = $controlador->actualizarPedido();
-    $accion = "editar";
+    if ($error) {
+      $accion = "editar";
+    }
   }
 }
 ?>

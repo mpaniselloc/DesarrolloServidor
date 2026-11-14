@@ -39,7 +39,7 @@ class pedidoControlador
   }
 
   //Guarda los cambios del pedido
-  //Si todo va bien redirige a la tabla; si no, devuelve el mensaje de error
+  //Devuelve null si todo va bien o el mensaje de error si algo falla
   public function actualizarPedido()
   {
     $id = $_POST['id'] ?? 0;
@@ -50,36 +50,68 @@ class pedidoControlador
 
     //Si el pedido no existe, no hay nada que modificar
     if (!$this->pedidos->buscarPorId($id)) {
-      header("Location: gestionPedidos.php");
-      exit();
+      return null;
     }
 
     if ($titulo == "" || $isbn == "" || $fecha == "" || $usuario == "") {
       return "Rellena todos los campos.";
     }
 
-    //Comprueba que la fecha tenga el formato AAAA-MM-DD y que exista de verdad
-    $partes = explode("-", $fecha);
-    if (count($partes) != 3 || !ctype_digit(implode("", $partes)) || !checkdate((int) $partes[1], (int) $partes[2], (int) $partes[0])) {
-      return "La fecha no es válida (formato AAAA-MM-DD).";
-    }
-
     $this->pedidos->actualizar($id, $titulo, $isbn, $fecha, $usuario);
-
-    //Redirige para que al pulsar F5 no se vuelva a enviar el formulario
-    header("Location: gestionPedidos.php");
-    exit();
+    return null;
   }
 
-  //Elimina el pedido que llega por POST y vuelve a la tabla
+  //Elimina el pedido que llega por POST
   public function eliminarPedido()
   {
     if (isset($_POST['id'])) {
       $this->pedidos->eliminar($_POST['id']);
     }
+  }
 
-    //Redirige para que al pulsar F5 no se repita el borrado
-    header("Location: gestionPedidos.php");
-    exit();
+  //Muestra el formulario de compra con los datos del libro elegido en el catálogo
+  //Si viene de un intento fallido, muestra el error y lo que se había escrito
+  public function formularioCompra($error = null)
+  {
+    $titulo = $_POST['titulo'] ?? "";
+    $isbn = $_POST['isbn'] ?? "";
+    $fecha = $_POST['fecha'] ?? date('Y-m-d');
+    //El usuario siempre es el de la sesión
+    $usuario = $_SESSION['usuario'];
+
+    //Si no llega ningún libro, no hay nada que comprar
+    if ($titulo == "" || $isbn == "") {
+      echo '<article class="centrado"><h2>No has elegido ningún libro</h2><a href="index.php">Volver al listado de libros</a></article>';
+      return;
+    }
+
+    include __DIR__ . '/../vista/comprarVista.php';
+  }
+
+  //Guarda el pedido nuevo
+  //Devuelve null si todo va bien o el mensaje de error si algo falla
+  public function realizarCompra()
+  {
+    $titulo = trim($_POST['titulo'] ?? "");
+    $isbn = trim($_POST['isbn'] ?? "");
+    $fecha = trim($_POST['fecha'] ?? "");
+    //No se usa el usuario del formulario: así nadie puede comprar a nombre de otro
+    $usuario = $_SESSION['usuario'];
+
+    if ($titulo == "" || $isbn == "" || $fecha == "") {
+      return "Rellena todos los campos.";
+    }
+
+    if (!$this->pedidos->insertar($titulo, $isbn, $usuario, $fecha)) {
+      return "No se ha podido guardar el pedido. Inténtalo de nuevo.";
+    }
+
+    return null;
+  }
+
+  //Muestra el mensaje de pedido realizado
+  public function pedidoRealizado()
+  {
+    include __DIR__ . '/../vista/pedidoRealizadoVista.php';
   }
 }

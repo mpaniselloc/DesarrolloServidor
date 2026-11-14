@@ -1,7 +1,10 @@
 <?php
 if (isset($libros)): ?>
 <?php foreach ($libros->libro as $libro): ?>
-    <form class="contenedor-principal" action="#" method="POST">
+    <form class="contenedor-principal" action="comprar.php" method="POST">
+        <!-- Datos del libro que se envían al formulario de compra -->
+        <input type="hidden" name="titulo" value="<?php echo htmlspecialchars($libro->titulo); ?>">
+        <input type="hidden" name="isbn" value="<?php echo htmlspecialchars($libro->isbn); ?>">
         <div class="tarjeta-libro">
             <div class="imagen-libro"><img src="includes/img/<?php echo $libro->portada; ?>"></div>
             <div class="informacion-libro">
